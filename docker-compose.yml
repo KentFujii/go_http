@@ -6,4 +6,4 @@ services:
       - .:/go/src/app
     ports:
       - "18888:18888"
-    command: go run http1_syntax/server.go
+    network_mode: "host"
