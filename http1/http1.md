@@ -10,7 +10,7 @@ HTTPを構成する要素である
 にフォーカスして解説する
 
 ```
-docker-compose run app go run http1_syntax/server.go
+docker-compose run app go run http1/server.go
 ```
 
 ## HTTP/0.9でできることを試す
