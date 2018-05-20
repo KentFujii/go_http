@@ -7,3 +7,4 @@ services:
     ports:
       - "18888:18888"
     network_mode: "host"
+    command: go run http1/server.go

@@ -9,10 +9,6 @@ HTTPを構成する要素である
 
 にフォーカスして解説する
 
-```
-docker-compose run app go run http1/server.go
-```
-
 ## HTTP/0.9でできることを試す
 
 リクエストを投げてレスポンスを得る
