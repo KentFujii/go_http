@@ -10,8 +10,13 @@ import (
 	"testing"
 )
 
+
 // func main(){}
 
+// TLSでは一度だけ公開鍵で厳重に通信し、その後は共通鍵で高速に暗号化通信をしている
+// 公開鍵は厳重な分計算量が大きい
+// go test -bench . でベンチマークを取ってみる
+// 公開鍵の用意
 func prepareRSA() (sourceData, label []byte, privateKey *rsa.PrivateKey) {
 	sourceData = make([]byte, 128)
 	label = []byte("")
@@ -20,6 +25,7 @@ func prepareRSA() (sourceData, label []byte, privateKey *rsa.PrivateKey) {
 	return
 }
 
+// 公開鍵: 暗号化
 func BenchmarkRSAEnctyption(b *testing.B) {
 	sourceData, label, privateKey := prepareRSA()
 	publicKey := &privateKey.PublicKey
@@ -30,6 +36,7 @@ func BenchmarkRSAEnctyption(b *testing.B) {
 	}
 }
 
+// 公開鍵: 復号化
 func BenchmarkRSADecryption(b *testing.B) {
 	sourceData, label, privateKey := prepareRSA()
 	publicKey := &privateKey.PublicKey
@@ -41,6 +48,7 @@ func BenchmarkRSADecryption(b *testing.B) {
 	}
 }
 
+// 共通鍵を用意
 func PrepareAES() (sourceData, nonce []byte, gcm cipher.AEAD) {
 	sourceData = make([]byte, 128)
 	io.ReadFull(rand.Reader, sourceData)
@@ -53,6 +61,7 @@ func PrepareAES() (sourceData, nonce []byte, gcm cipher.AEAD) {
 	return
 }
 
+// 共通鍵: 暗号化
 func BenchmarkAESEncryption(b *testing.B) {
 	sourceData, nonce, gcm := PrepareAES()
 	b.ResetTimer()
@@ -61,6 +70,7 @@ func BenchmarkAESEncryption(b *testing.B) {
 	}
 }
 
+// 共通鍵: 復号化
 func BenchmarkAESDncryption(b *testing.B) {
 	sourceData, nonce, gcm := PrepareAES()
 	encrypted := gcm.Seal(nil, nonce, sourceData, nil)
