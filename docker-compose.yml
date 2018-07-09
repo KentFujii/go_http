@@ -7,4 +7,4 @@ services:
     ports:
       - "18888:18888"
       - "18443:18443"
-    command: bash -c "dep ensure && go run http1/server.go && go run http1.1_client/https_server.go"
+    command: bash -c "dep ensure && go run http.go && go run https.go"

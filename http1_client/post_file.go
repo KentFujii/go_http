@@ -19,7 +19,7 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	readFile, err := os.Open("photo.jpg")
+	readFile, err := os.Open("./http1_client/photo.jpg")
 	if err != nil {
 		panic(err)
 	}
