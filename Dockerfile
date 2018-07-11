@@ -1,5 +1,7 @@
 FROM ubuntu:16.04
 RUN apt-get update && apt-get install --no-install-recommends -y \
+    gcc \
+    build-essential \
     ca-certificates \
     curl \
     mercurial \
@@ -9,6 +11,7 @@ ENV GOROOT /usr/local/go
 ENV GOBIN /usr/local/go/bin
 ENV PATH $PATH:/usr/local/go/bin
 RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
+RUN go get -u github.com/derekparker/delve/cmd/dlv
 
 ENV GOPATH /go
 WORKDIR /go/src/app
