@@ -28,7 +28,39 @@ TLSでは共通鍵と公開鍵を使い分けて安全性と通信速度を両�
 
 ## PUTメソッドDELETEメソッド
 
+PUTとDELETEメソッドがHTTP1.1から追加されたことで、HTTPでCRUDが表現できるようになった
+
+| HTTP | CRUD | SQL |
+| --- | --- | --- |
+| GET | Read | select |
+| POST | Create | insert |
+| PUT | Update | update |
+| DELETE | Delete | delete |
+
 ## OPTIONS、Trace、CONNECTメソッド
+
+### OPTIONS
+
+OPTIONSはサーバーが受け取ることが可能なメソッド
+
+ほとんどのWebサーバーでは使われてないので、サーバーのレスポンスを確認するための用途として利用される
+
+
+```
+curl -X OPTIONS localhost
+```
+
+### TRACE
+
+CookieヘッダやAuthorizationヘッダといったリクエストで送った情報をそのまま返してくれる
+
+クロスサイトスクリプティングと合わせてユーザーの情報を盗み取るクロスサイトトレーシングによって現在は非推奨メソッドとなっている
+
+クロスサイトトレーシングは、JavaScriptではアクセスできないHttpOnlyなクッキー情報を盗む手段のこと
+
+### CONNECT
+
+HTTPのプロトコルに、他のプロトコルのパケットをのせる
 
 ## プロトコルのアップグレード
 

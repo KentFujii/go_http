@@ -9,3 +9,11 @@ services:
       - "18443:18443"
     privileged: true
     command: bash -c "dep ensure && go run http.go && go run https.go"
+  webserver:
+    image: nginx
+    ports:
+      - "80:80"
+  proxyserver:
+    image: poklet/squid
+    ports:
+      - "3128:3128"
