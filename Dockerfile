@@ -17,15 +17,17 @@ WORKDIR /go/src/app
 
 ENV OPENSSL_CNF /etc/ssl/openssl.cnf
 ENV OPENSSL_SUBJ "/C=JP/ST=Tokyo/L=Minato-ku/O=KentFujii/OU=Development/CN=GoHTTP/"
+RUN mkdir /certs/
 ADD openssl.cnf "${OPENSSL_CNF}"
-RUN openssl genrsa -out ca.key 2048
-RUN openssl req -new -sha256 -key ca.key -out ca.csr -config "${OPENSSL_CNF}" -subj "${OPENSSL_SUBJ}"
-RUN openssl x509 -in ca.csr -days 365 -req -signkey ca.key -sha256 -out ca.crt -extfile "${OPENSSL_CNF}" -extensions CA
 
-RUN openssl rsa -in ca.key -text
-RUN openssl req -in ca.csr -text
-RUN openssl x509 -in ca.crt -text
+RUN openssl genrsa -out /certs/ca.key 2048
+RUN openssl req -new -sha256 -key /certs/ca.key -out /certs/ca.csr -config "${OPENSSL_CNF}" -subj "${OPENSSL_SUBJ}"
+RUN openssl x509 -in /certs/ca.csr -days 365 -req -signkey /certs/ca.key -sha256 -out /certs/ca.crt -extfile "${OPENSSL_CNF}" -extensions CA
 
-RUN openssl genrsa -out server.key 2048
-RUN openssl req -new -nodes -sha256 -key server.key -out server.csr -config "${OPENSSL_CNF}" -subj "${OPENSSL_SUBJ}"
-RUN openssl x509 -req -days 365 -in server.csr -sha256 -out server.crt -CA ca.crt -CAkey ca.key -CAcreateserial -extfile "${OPENSSL_CNF}" -extensions Server
+RUN openssl rsa -in /certs/ca.key -text
+RUN openssl req -in /certs/ca.csr -text
+RUN openssl x509 -in /certs/ca.crt -text
+
+RUN openssl genrsa -out /certs/server.key 2048
+RUN openssl req -new -nodes -sha256 -key /certs/server.key -out /certs/server.csr -config "${OPENSSL_CNF}" -subj "${OPENSSL_SUBJ}"
+RUN openssl x509 -req -days 365 -in /certs/server.csr -sha256 -out /certs/server.crt -CA /certs/ca.crt -CAkey /certs/ca.key -CAcreateserial -extfile "${OPENSSL_CNF}" -extensions Server
