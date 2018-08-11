@@ -1,4 +1,4 @@
-FROM ubuntu:16.04
+FROM golang:1.9-stretch
 RUN apt-get update && apt-get install --no-install-recommends -y \
     gcc \
     build-essential \
@@ -6,14 +6,13 @@ RUN apt-get update && apt-get install --no-install-recommends -y \
     openssl \
     curl \
     git-core
-RUN curl -s https://storage.googleapis.com/golang/go1.9.2.linux-amd64.tar.gz| tar -v -C /usr/local -xz
+
 ENV GOROOT /usr/local/go
 ENV GOBIN /usr/local/go/bin
-ENV PATH $PATH:/usr/local/go/bin
-RUN curl https://raw.githubusercontent.com/golang/dep/master/install.sh | sh
-RUN go get -u github.com/derekparker/delve/cmd/dlv
-
 ENV GOPATH /go
+ENV PATH $PATH:/usr/local/go/bin
+RUN go get -u github.com/golang/dep/cmd/dep
+RUN go get -u github.com/derekparker/delve/cmd/dlv
 WORKDIR /go/src/app
 
 ENV OPENSSL_CNF /etc/ssl/openssl.cnf
