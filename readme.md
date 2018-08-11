@@ -4,6 +4,7 @@ https://github.com/oreilly-japan/real-world-http
 
 ```
 docker-compose up --build
+docker-compose exec app go run ファイルのパス
 ```
 
 ## gist
