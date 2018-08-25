@@ -1,14 +1,21 @@
 version: '2'
 services:
-  app:
-    build: .
+  http1:
+    build: http1/.
     volumes:
-      - .:/go/src/app
+      - ./http1/.:/go/src/app
     ports:
       - "18888:18888"
+    privileged: true
+    command: bash -c "(dep init || dep ensure) && go run http.go"
+  http1.1:
+    build: http1.1/.
+    volumes:
+      - ./http1.1/.:/go/src/app
+    ports:
       - "18443:18443"
     privileged: true
-    command: bash -c "dep ensure && go run http.go && go run https.go"
+    command: bash -c "(dep init || dep ensure) && go run https.go"
   webserver:
     image: nginx
     ports:
