@@ -16,7 +16,7 @@ RUN go get -u github.com/derekparker/delve/cmd/dlv
 WORKDIR /go/src/app
 
 ENV OPENSSL_CNF /etc/ssl/openssl.cnf
-ENV OPENSSL_SUBJ "/C=JP/ST=Tokyo/L=Minato-ku/O=KentFujii/OU=Development/CN=GoHTTP/"
+ENV OPENSSL_SUBJ "/C=JP/ST=Tokyo/L=Minato-ku/O=KentFujii/OU=Development/CN=localhost/"
 RUN mkdir /certs/
 ADD openssl.cnf "${OPENSSL_CNF}"
 
