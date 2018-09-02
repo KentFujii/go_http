@@ -32,6 +32,14 @@ services:
       - "18887:18887"
     privileged: true
     command: bash -c "(dep init || dep ensure) && go run http_protocol_upgrade.go"
+  http1.1_chunk:
+    build: http1.1_chunk/.
+    volumes:
+      - ./http1.1_chunk/.:/go/src/app
+    ports:
+      - "18886:18886"
+    privileged: true
+    command: bash -c "(dep init || dep ensure) && go run http_chunk.go"
   webserver:
     image: nginx
     ports:
