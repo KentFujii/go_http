@@ -8,22 +8,22 @@ services:
       - "18888:18888"
     privileged: true
     command: bash -c "(dep init || dep ensure) && go run http.go"
-  http1.1:
-    build: http1.1/.
+  http1.1_server_certs:
+    build: http1.1_server_certs/.
     volumes:
-      - ./http1.1/.:/go/src/app
+      - ./http1.1_server_certs/.:/go/src/app
     ports:
       - "18443:18443"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run https.go"
-  http1.1_client_certs:
-    build: http1.1_client_certs/.
+    command: bash -c "(dep init || dep ensure) && go run https_server_certs.go"
+  http1.1__server_and_client_certs:
+    build: http1.1_server_and_client_certs/.
     volumes:
-      - ./http1.1_client_certs/.:/go/src/app
+      - ./http1.1_server_and_client_certs/.:/go/src/app
     ports:
       - "18442:18442"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run https_client_certs.go"
+    command: bash -c "(dep init || dep ensure) && go run https_server_and_client_certs.go"
   http1.1_protocol_upgrade:
     build: http1.1_protocol_upgrade/.
     volumes:
