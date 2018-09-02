@@ -16,6 +16,22 @@ services:
       - "18443:18443"
     privileged: true
     command: bash -c "(dep init || dep ensure) && go run https.go"
+  http1.1_client_certs:
+    build: http1.1_client_certs/.
+    volumes:
+      - ./http1.1_client_certs/.:/go/src/app
+    ports:
+      - "18442:18442"
+    privileged: true
+    command: bash -c "(dep init || dep ensure) && go run https_client_certs.go"
+  http1.1_protocol_upgrade:
+    build: http1.1_protocol_upgrade/.
+    volumes:
+      - ./http1.1_protocol_upgrade/.:/go/src/app
+    ports:
+      - "18887:18887"
+    privileged: true
+    command: bash -c "(dep init || dep ensure) && go run http_protocol_upgrade.go"
   webserver:
     image: nginx
     ports:
