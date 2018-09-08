@@ -40,6 +40,14 @@ services:
       - "18886:18886"
     privileged: true
     command: bash -c "(dep init || dep ensure) && go run http_chunk.go"
+  http1.1_rpc:
+    build: http1.1_rpc/.
+    volumes:
+      - ./http1.1_rpc/.:/go/src/app
+    ports:
+      - "18885:18885"
+    privileged: true
+    command: bash -c "(dep init || dep ensure) && go run http_rpc.go"
   webserver:
     image: nginx
     ports:
