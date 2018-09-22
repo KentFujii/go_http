@@ -12,7 +12,7 @@ func main() {
 	client := http.Client {
 		Transport: transport,
 	}
-	resp, err := client.Get("file://./readme.md")
+	resp, err := client.Get("file://./text.txt")
 	if err != nil {
 		panic(err)
 	}

@@ -2,22 +2,12 @@ package main
 
 import (
 	"fmt"
-	"io/ioutil"
 	"math/big"
 	"net/http"
 	"time"
 )
 
-var html []byte
-
-// HTMLをブラウザに送信
-func handlerHtml(w http.ResponseWriter, r*http.Request) {
-	// Pusherにキャスト可能であればプッシュする
-	w.Header().Add("Content-Type", "text/html")
-	w.Write(html)
-}
-
-func handlerPrimeSSE(w http.ResponseWriter, r *http.Request) {
+func handlerSSE(w http.ResponseWriter, r *http.Request) {
 	flusher, ok := w.(http.Flusher)
 	if !ok {
 		http.Error(w, "Streaming unsupported!", http.StatusInternalServerError)
@@ -31,5 +21,34 @@ func handlerPrimeSSE(w http.ResponseWriter, r *http.Request) {
 
 	var num int64 = 1
 	for id := 1; id <= 100; id++ {
+		// 通信が切れても終了
+		select {
+		case <-closeNotify:
+			fmt.Println("Connection closed from client")
+			return
+		default:
+			// do nothing
+		}
+		for {
+			num++
+			// 確率論的に素数を求める
+			if big.NewInt(num).ProbablyPrime(20) {
+				fmt.Println(num)
+				fmt.Fprintf(w, "data: {\"id\": %d, \"number\": %d}\n\n", id, num)
+				flusher.Flush()
+				time.Sleep(time.Second)
+				break
+			}
+		}
+		time.Sleep(time.Second)
 	}
+	// 100個超えたら送信終了
+	fmt.Println("Connection close from server")
+}
+
+func main() {
+	http.HandleFunc("/", handlerSSE)
+	fmt.Println("start htp listening :18884")
+	err := http.ListenAndServe(":18884", nil)
+	fmt.Println(err)
 }
