@@ -25,4 +25,32 @@ https://zenlogic.jp/aossl/basic/response/
 
 ポーリングやCometやServer-Send Eventsと違い、双方向な通信ができる
 
-## HTTPウェブプッシュ
+UpgradeヘッダーやConnectionヘッダーでWebSocketへプロトコルアップデートを指定する
+
+クライアント側は以下のリクエストヘッダーを投げると
+
+```
+Upgrade : websocket
+Connection: Upgrade
+Sec-WebSocket-Version: 13
+Sec-WebSocket-Key: hogehoge
+Sec-WebSocket-Protocol: chat
+```
+
+サーバー側は以下のレスポンスを返す
+
+```
+Upgrade : websocket
+Connection: Upgrade
+Sec-WebSocket-Version: 13
+Sec-WebSocket-Accept: fugafuga
+Sec-WebSocket-Protocol: chat
+```
+
+クライアントとサーバーは `Sec-WebSocket-Key` `Sec-WebSocket-Accept` でリクエストとレスポンスの接続のハンドシェイクをする
+
+ハンドシェイク後にWebSocketによる双方向通信を行うことができる
+
+`Sec-WebSocket-Protocol` でWebSocketのサブプロトコルを指定する
+
+WebSocketはソケット通信機能だけを提供するため、どのようなデータ形式(文字列やらbinaryやらファイルやらjsonやら)を使うかはアプリケーションで決める必要がある。
