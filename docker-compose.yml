@@ -1,5 +1,13 @@
 version: '2'
 services:
+  webserver:
+    image: nginx
+    ports:
+      - "80:80"
+  proxyserver:
+    image: poklet/squid
+    ports:
+      - "3128:3128"
   http1:
     build: http1/.
     volumes:
@@ -16,7 +24,7 @@ services:
       - "18443:18443"
     privileged: true
     command: bash -c "(dep init || dep ensure) && go run https_server_certs.go"
-  http1.1__server_and_client_certs:
+  http1.1_server_and_client_certs:
     build: http1.1_server_and_client_certs/.
     volumes:
       - ./http1.1_server_and_client_certs/.:/go/src/app
@@ -48,11 +56,11 @@ services:
       - "18885:18885"
     privileged: true
     command: bash -c "(dep init || dep ensure) && go run http_rpc.go"
-  webserver:
-    image: nginx
+  http2_server_sent_events:
+    build: http1.1_rpc/.
+    volumes:
+      - ./http2_server_sent_events/.:/go/src/app
     ports:
-      - "80:80"
-  proxyserver:
-    image: poklet/squid
-    ports:
-      - "3128:3128"
+      - "18884:18884"
+    privileged: true
+    command: bash -c "(dep init || dep ensure) && go run http_server_sent_events.go"

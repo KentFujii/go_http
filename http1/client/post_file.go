@@ -19,7 +19,12 @@ func main() {
 	if err != nil {
 		panic(err)
 	}
-	readFile, err := os.Open("./http1_client/photo.jpg")
+	// 画像ファイルのパスを取得
+	dir, err := os.Getwd()
+	if err != nil {
+		log.Fatal(err)
+	}
+	readFile, err := os.Open(dir + "/photo.jpg")
 	if err != nil {
 		panic(err)
 	}

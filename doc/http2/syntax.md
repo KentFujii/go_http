@@ -2,11 +2,6 @@
 
 HTTP/2では通信の高速化がなされ、かつ相乗りプロトコルも増えた
 
-## HTTP/2
-
-https://techblog.yahoo.co.jp/infrastructure/http2/introduction_to_http2/
-https://zenlogic.jp/aossl/basic/response/
-
 - ストリーム
   - HTTP/1.0ではリクエストを1つ送ってはレスポンスを待つ、という方式だったので、ネットワークの遅延時間（レイテンシ）が大きいと、応答がどんどん遅くなる
   - HTTP/1.1のパイプラインでは、複数のリクエストを同時に送信でき、ネットワークの遅延を（見掛け上）隠ぺいできる
