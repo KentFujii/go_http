@@ -57,10 +57,18 @@ services:
     privileged: true
     command: bash -c "(dep init || dep ensure) && go run http_rpc.go"
   http2_server_sent_events:
-    build: http1.1_rpc/.
+    build: http2_server_sent_events/.
     volumes:
       - ./http2_server_sent_events/.:/go/src/app
     ports:
       - "18884:18884"
     privileged: true
     command: bash -c "(dep init || dep ensure) && go run http_server_sent_events.go"
+  http2_websocket:
+    build: http2_websocket/.
+    volumes:
+      - ./http2_websocket/.:/go/src/app
+    ports:
+      - "18883:18883"
+    privileged: true
+    command: bash -c "(dep init || dep ensure) && go run http_websocket.go"
