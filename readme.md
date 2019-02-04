@@ -4,9 +4,8 @@ https://github.com/oreilly-japan/real-world-http
 
 ```
 docker-compose up --build
-docker-compose exec app go run ファイルのパス
-例えば
-docker-compose exec http1 go run client/get_simple.go
+docker-compose exec 試したいプロトコル bash
+./bin/試したい通信処理
 ```
 
 ## gist

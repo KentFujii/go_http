@@ -4,10 +4,12 @@ services:
     image: nginx
     ports:
       - "80:80"
+
   proxyserver:
     image: poklet/squid
     ports:
       - "3128:3128"
+
   http1:
     build: http1/.
     volumes:
@@ -15,7 +17,8 @@ services:
     ports:
       - "18888:18888"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run http.go"
+    command: bash build.sh
+
   http1.1_server_certs:
     build: http1.1_server_certs/.
     volumes:
@@ -23,7 +26,8 @@ services:
     ports:
       - "18443:18443"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run https_server_certs.go"
+    command: bash build.sh
+
   http1.1_server_and_client_certs:
     build: http1.1_server_and_client_certs/.
     volumes:
@@ -31,7 +35,8 @@ services:
     ports:
       - "18442:18442"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run https_server_and_client_certs.go"
+    command: bash build.sh
+
   http1.1_protocol_upgrade:
     build: http1.1_protocol_upgrade/.
     volumes:
@@ -39,7 +44,9 @@ services:
     ports:
       - "18887:18887"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run http_protocol_upgrade.go"
+    command: bash build.sh
+
+
   http1.1_chunk:
     build: http1.1_chunk/.
     volumes:
@@ -47,7 +54,8 @@ services:
     ports:
       - "18886:18886"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run http_chunk.go"
+    command: bash build.sh
+
   http1.1_rpc:
     build: http1.1_rpc/.
     volumes:
@@ -55,7 +63,8 @@ services:
     ports:
       - "18885:18885"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run http_rpc.go"
+    command: bash build.sh
+
   http2_server_sent_events:
     build: http2_server_sent_events/.
     volumes:
@@ -63,7 +72,8 @@ services:
     ports:
       - "18884:18884"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run http_server_sent_events.go"
+    command: bash build.sh
+
   http2_websocket:
     build: http2_websocket/.
     volumes:
@@ -71,4 +81,4 @@ services:
     ports:
       - "18883:18883"
     privileged: true
-    command: bash -c "(dep init || dep ensure) && go run http_websocket.go"
+    command: bash build.sh

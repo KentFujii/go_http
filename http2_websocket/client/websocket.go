@@ -7,11 +7,10 @@ import (
 	"os"
 	"os/signal"
 	"time"
-
 	"github.com/gorilla/websocket"
 )
 
-var addr = flag.String("addr", "localhost:8080", "http service address")
+var addr = flag.String("addr", "127.0.0.1:18883", "http service address")
 
 func main() {
 	flag.Parse()
