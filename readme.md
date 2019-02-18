@@ -8,7 +8,7 @@ docker-compose exec 試したいプロトコル bash
 ./bin/試したい通信処理
 ```
 
-Elastic Stackで通信データを監視する
+Elastic Stackで通信データを可視化する
 
 ## gist
 
