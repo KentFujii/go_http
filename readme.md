@@ -1,4 +1,6 @@
-https://github.com/oreilly-japan/real-world-http
+# go_net
+
+golang network programs
 
 ## 環境構築
 
