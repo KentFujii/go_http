@@ -11,6 +11,5 @@ ENV GOROOT /usr/local/go
 ENV GOBIN /usr/local/go/bin
 ENV GOPATH /go
 ENV PATH $PATH:/usr/local/go/bin
-RUN go get -u github.com/golang/dep/cmd/dep
 RUN go get -u github.com/derekparker/delve/cmd/dlv
 WORKDIR /go/src/app
